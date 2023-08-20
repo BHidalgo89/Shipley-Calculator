@@ -1,0 +1,215 @@
+#include <iostream>
+using namespace std;
+
+/** Calculates Predicted Abstractions Score **/
+float getPredictedAbstractions(float vocab_raw, int age, int years_school)
+{
+    int age_squared = age*age;
+    int years_squared = years_school*years_school;
+    
+    float abstract_pred = 15.326 + (.320*vocab_raw) + (.116*age) - (1.586*years_school) - (.002*age_squared) + (.055*years_squared);
+    
+    return abstract_pred;
+}
+
+/** Calculates AQ Score **/
+float getAQ(float abstract_raw, float abstract_predicted)
+{
+    float aq = (((abstract_raw - abstract_predicted)/3.23)*15)+100;
+    
+    return aq;
+}
+
+/** Calculates Predicted Block Patterns Score **/
+float getPredictedBlockPatterns(float vocab_raw, int age, int years_school)
+{
+    int age_squared = age*age;
+    int years_squared = years_school*years_school;
+    
+    float block_pred = (17.374 + (.334*vocab_raw) + (.049*age) - (1.707*years_school) - (.002*age_squared) + (.063*years_squared));
+    
+    return block_pred;
+}
+
+/** Calculates BQ Score **/
+float getBQ(float block_raw, float block_predicted)
+{
+    float bq = (((block_raw - block_predicted)/4.837)*15)+100;
+    
+    return bq;
+}
+
+/** Gets AQ Category **/
+void getAQCategory(float aq)
+{
+    if(aq < 70)
+    {
+        cout << "This AQ score is categorized as 'Highly Probably of Impairment." << endl;
+    }
+    else if(aq >= 70 && aq <= 79)
+    {
+        cout << "This AQ score is categorized as 'Likely Impairment'." << endl;
+    }
+    else if(aq >= 80 && aq <= 89)
+    {
+        cout << "This AQ score is categorized as 'Possible Impairment'." << endl;
+    }
+    else
+    {
+        cout << "This AQ score is categorized as 'Within Normal Limits'." << endl;
+    }
+}
+
+/** Gets BQ Category **/
+void getBQCategory(float bq)
+{
+    if(bq < 70)
+    {
+        cout << "This BQ score is categorized as 'Highly Probably of Impairment." << endl;
+    }
+    else if(bq >= 70 && bq <= 79)
+    {
+        cout << "This BQ score is categorized as 'Likely Impairment'." << endl;
+    }
+    else if(bq >= 80 && bq <= 89)
+    {
+        cout << "This BQ score is categorized as 'Possible Impairment'." << endl;
+    }
+    else
+    {
+        cout << "This BQ score is categorized as 'Within Normal Limits'." << endl;
+    }
+}
+
+
+
+ /** Begin Program **/
+int main() {
+    
+    string name;
+    int age;
+    int years_school;
+    int which_test;
+    
+    // Write C++ code here
+    cout << "Welcome to the Shipley-2 Impairment Index Calculator!" << endl << endl;
+    
+    cout << "To begin, please enter the first name of the examinee: " << endl;
+    cin >> name;
+    cout << endl << endl;
+    
+    cout << "Please enter " << name << "'s age in years: " << endl;
+    cin >> age;
+    cout << endl << endl << endl;
+    
+    cout << "Please enter the number of years of schooling " << name << " has completed: " << endl;
+    cin >> years_school;
+    cout << endl << endl << endl;
+    
+    cout << "If " << name << " completed Abstractions, please enter 1." << endl << "If " << name << " completed Block Patterns, please enter 2." << endl << "If " << name << " completed both Abstractions and Block Patterns, please enter 3." << endl;
+    cin >> which_test;
+    cout << endl << endl;
+
+    if(which_test == 1){
+        float abstract_predicted;
+        float abstract_raw;
+        float aq;
+        float vocab_raw;
+        
+        cout << "We first need to compute " << name << "'s Predicted scores." << endl << endl;
+        
+        cout << "Please enter " << name << "'s Vocabulary raw score: " << endl;
+        cin >> vocab_raw;
+        cout << endl;
+        
+        cout << "Please enter " << name << "'s Abstractions raw score: " << endl;
+        cin >> abstract_raw;
+        cout << endl << endl;
+    
+        abstract_predicted = getPredictedAbstractions(vocab_raw, age, years_school);
+        
+        cout << name << "'s Predicted Abstractions score is " << abstract_predicted << "." << endl << endl;
+        
+        aq = getAQ(abstract_raw, abstract_predicted);
+        
+        cout << name << "'s AQ is: " << aq << ".";
+        
+        getAQCategory(aq);
+    }
+    else if(which_test == 2){
+        float block_predicted;
+        float block_raw;
+        float bq;
+        float vocab_raw;
+        
+        cout << endl << "We first need to compute " << name << "'s Predicted scores." << endl << endl;
+        
+        cout << "Please enter " << name << "'s Vocabulary raw score: " << endl;
+        cin >> vocab_raw;
+        cout << endl;
+        
+        cout << endl << "Please enter " << name << "'s Block Patterns raw score: " << endl;
+        cin >> block_raw;
+        cout << endl << endl;
+    
+        block_predicted = getPredictedBlockPatterns(vocab_raw, age, years_school);
+        
+        cout << name << "'s Predicted Block Patterns score is " << block_predicted << "." << endl << endl;
+        
+        bq = getBQ(block_raw, block_predicted);
+        
+        cout << name << "'s BQ is: " << bq << ".";
+        
+        getBQCategory(bq);
+    }
+    else if(which_test == 3){
+        float abstract_predicted;
+        float abstract_raw;
+        float aq;
+        float block_predicted;
+        float block_raw;
+        float bq;
+        float vocab_raw;
+
+
+        cout << "We'll start off with computing " << name << "'s AQ score. To do so, we'll first need to compute " << name << "'s Predicted Abstraction score." << endl << endl;
+        
+        cout << "Please enter " << name << "'s Vocabulary raw score: " << endl;
+        cin >> vocab_raw;
+        cout << endl;
+        
+        cout << endl << "Please enter " << name << "'s Abstractions raw score: " << endl;
+        cin >> abstract_raw;
+        cout << endl << endl;
+    
+        abstract_predicted = getPredictedAbstractions(vocab_raw, age, years_school);
+        
+        cout << name << "'s Predicted Abstractions score is " << abstract_predicted << "." << endl << endl;
+        
+        aq = getAQ(abstract_raw, abstract_predicted);
+        
+        cout << name << "'s AQ is: " << aq << ".";
+        
+        getAQCategory(aq);
+        
+        cout << endl;
+        
+        cout << "Now, lets compute " << name << "'s BQ score. To do so, we'll first need to compute " << name << "'s Predicted Block Patterns score." << endl << endl;
+        
+        cout << "Please enter " << name << "'s Block Patterns raw score: " << endl;
+        cin >> block_raw;
+        cout << endl << endl;
+    
+        block_predicted = getPredictedBlockPatterns(vocab_raw, age, years_school);
+        
+        cout << endl << name << "'s Predicted Block Patterns score is " << block_predicted << "." << endl << endl;
+        
+        bq = getBQ(block_raw, block_predicted);
+        
+        cout << name << "'s BQ is: " << bq << ".";
+        
+        getBQCategory(bq);
+    }
+
+    return 0;
+}
